@@ -1,0 +1,185 @@
+body {
+	color: #313131;
+	overflow-x: hidden;
+}
+#pre-loader  {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: #fefefe;
+     z-index: 99;
+  	 height: 100%;
+}
+#status-message {
+	position: absolute;
+	left: 45%;
+	top: 40%;
+}
+#status  {
+     width: 200px;
+     height: 200px;
+     position: relative;
+     left: 50%;
+     top: 50%;
+     background-image: url("/static/images/ajax-preloader.gif");
+     background-repeat: no-repeat;
+     background-position: center;
+     margin: -100px 0 0 -100px;
+ }
+.menu-bar {
+	border-bottom: 1px solid #D4D4D4;
+	box-shadow: 0px 0px 3px #D4D4D4;
+}
+.nav-menu {
+	margin: 18px 15px 2px 15px;
+	border-bottom: 2px solid #fff;
+}
+.nav-menu:hover {
+	cursor: pointer;
+	border-bottom: 2px solid #20C05C;
+}
+.user-menu {
+	cursor: pointer;
+	margin: 18px;
+	text-transform: capitalize;
+}
+.user-menu .glyphicon, .caret {
+	color: #20C05C;
+}
+.search-input {
+	width: 80%;
+}
+.search-btn, .submit-btn {
+	color: #fff;
+	background-color: #20C05C;
+	border-color: #20C05C;
+}
+.search-btn:hover, .submit-btn:hover {
+	background-color: #1DAD53;
+	color: #fff;
+	border-color: #1DAD53;
+}
+.submit-btn {
+	margin: 5px;
+}
+.pinote-module {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.pinote-module h3{
+	margin-top: 10px;
+}
+.main-wrap.left {
+	padding-right: 10px;
+	background-color: #F9F9F9;
+	border-top: 1px solid #E9E9E9;
+}
+.main-wrap.right {
+	background-color: #F9F9F9;
+	border-top: 1px solid #E9E9E9;
+	border-left: 1px solid #E0E0E0;
+}
+.category-title {
+	margin-top: 3px;
+	/*font-weight: bold;*/
+	cursor: pointer;
+	/*border-bottom: 1px solid #D4D4D4;*/
+}
+.category-title:hover {
+	background-color: #E9E9E9;
+}
+.category-title .glyphicon-collapse-down{
+	padding: 4px;
+}
+.category-title, .default-title {
+	margin-left: 5px;
+	padding: 2px 0px 2px 5px;
+}
+.category-title .glyphicon-tag {
+	color: #838383;
+	font-size: 0.897em;
+}
+
+.default-title {
+	padding-top: 10px;
+	font-weight: 500;
+	font-size: 1.1em;
+}
+.category-data, .default-data {
+	margin-left: 30px;
+	/*padding-top: 3px;*/
+	cursor: pointer;
+	font-size: 0.91em;
+}
+.category-data .glyphicon-pushpin,
+.default-data .glyphicon-pushpin {
+	color: #838383;
+	font-size: 0.786em;
+}
+.form-passvault {
+	margin-left: 5%;
+	margin-top: 3%;
+}
+.submit-btn.right {
+	float: right;
+}
+#passvault-dropdown {
+	float: right;
+}
+.passvault-dropdown-li {
+	padding: 2px 10px 2px 10px;
+	text-decoration: capitalize;
+	cursor: pointer;
+}
+.passvault-dropdown-li:hover {
+	background-color: #E9E9E9;
+}
+.passvault-dropdown-li .glyphicon {
+	padding-right: 3px;
+	color: #696969;
+}
+.glyphicon-option-horizontal {
+	cursor: pointer;
+	color: #9C9C9C;
+	font-size: 1.345em;
+}
+.glyphicon-option-horizontal:hover {
+	color: #696969;
+}
+.add-row .form-group {
+	padding-left: 50px;
+}
+
+
+
+/* custom bootstrap */
+p {
+	margin: 0px 0px 5px;
+}
+.navbar-brand {
+	color: #20C05C;
+	font-size: 2em;
+	font-weight: bold;
+}
+.navbar-brand:hover {
+	color: #1A9A4A;
+}
+.dropdown-menu {
+	top: 80%;
+}
+.control-label {
+	text-align: left !important;
+	text-transform: uppercase;
+	font-size: 0.976em;
+	font-weight: 300;
+}
+.form-control:focus {
+	border-color: #6FD696;
+	box-shadow: none;
+}
+.modal-dialog.add-row {
+	top: 100px;
+	width: 450px;
+}

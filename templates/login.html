@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Pinote </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{% load staticfiles %}
+		<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/login-style.css" %}" />
+
+	</head>
+	<body>
+	<h1>Pinote </h1>
+	<form id="login_form" method="post" action="">
+			{% csrf_token %}
+			<p><input type="text" name="username" autocomplete="off" size="30" placeholder="Username" autofocus/></p>
+			<p><input type="password" name="password" autocomplete="off" size="30" placeholder="Password"/></p>
+			<input type="submit" value="submit" />
+		</form>
+	</body>
+</html>

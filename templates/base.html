@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Home - Pinote</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
+		<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/base-style.css"/>
+		<script src="/static/js/jquery-1.11.2.min.js"></script>
+		<!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> -->
+		<script src="/static/js/angular/angular.min.js"></script>
+		<script src="/static/js/angular/angular-local-storage.min.js"></script>
+		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+		<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/static/js/base-action.js"></script>
+	</head>
+	<body ng-app="pinoteApp" ng-controller="pinoteController as ctrl" ng-init="init()">
+		<!-- <div id="pre-loader">
+			<p id="status-message">Loading your pinote data</p>
+			<div id="status"></div>
+		</div> -->
+		<!-- Menu bar -->
+		<div class="container-fluid menu-bar">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Pinote</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="nav-menu" ng-click="passvaultData()">Passvault</li>
+					<li class="nav-menu" ng-click="weblinksData()">Weblinks</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right dropdown">
+					<li class="user-menu dropdown-toggle" id="user-menu-dropdown" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-user"></span> {{ ctrl.username }}
+						<span class="caret"></span>
+					</li>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="user-menu-dropdown">
+						<li role="presentation">
+							<a role="menuitem" ng-click="clearCache()" href="/logout">Log Out</a>
+						</li>
+					</ul>
+				</ul>
+
+			</div>
+		</div> <!-- Menu bar end  -->
+
+		<!-- Pinote module search  -->
+		<div class="container-fluid pinote-module">
+			<div class="col-xs-2 col-sm-2">
+				<h3>{{ ctrl.pinote_module }}</h3>
+			</div>
+			<div class="col-xs-4 col-sm-4">
+				<form class="navbar-form" role="search">
+					<div class="input-group search-input">
+						<input type="text" class="form-control input-sm" autocomplete="off" placeholder="Search" name="q" id="search">
+						<div class="input-group-btn">
+							<button class="btn btn-sm search-btn" type="submit">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div> <!-- pinote module search -->
+
+		<!-- Module data -->
+		<div class="row">
+			<div class="main-wrap left col-sm-2">
+
+				<!-- Passvault module -->
+				<div ng-if="ctrl.passvault_datas != null">
+					<div ng-repeat="data in ctrl.passvault_datas">
+						<div ng-if="data.category != 'default'" id="accordion">
+							<div data-toggle="collapse" data-target="#{{ spaceless(data.category) }}">
+								<div class="category-title">
+									<span class="glyphicon glyphicon-tag"></span>&nbsp;{{ data.category }}
+								</div>
+							</div>
+							<div id="{{ spaceless(data.category) }}" class="collapse">
+								<div ng-repeat="category_val in data.category_data">
+									<p class="category-data" ng-click="load_passvault_data(data.category, category_val)">
+										<span class="glyphicon glyphicon-pushpin"></span> {{ category_val.name }}
+									</p>
+								</div>
+							</div>
+						</div>
+						<div ng-show="data.category === 'default' && data.category_data.length > 0">
+							<div class="default-title">(Default) {{ data.category_data }}</div>
+							<div ng-repeat='data in data.category_data'>
+								<div class="default-data" ng-click="load_passvault_data(null, data)">
+								<span class="glyphicon glyphicon-pushpin"></span> {{ data.name }}</div>
+							</div>
+						</div>
+					</div>
+				</div>  <!-- Passvault module ended -->
+
+				<!-- Weblinks module -->
+				<div ng-if="ctrl.weblinks_datas != null">
+					<div ng-repeat='data in ctrl.weblinks_datas'>
+						{{ data.title }}</br>
+					</div>
+				</div>
+			</div>
+
+			<div class="main-wrap right col-sm-10">
+				<!-- Loads the passvault fields when user clicks on name field -->
+				<div ng-if="passvault_fields != null">
+					<form class="form-horizontal form-passvault" novalidate role="form">
+						<div class="form-group">
+							<div class="col-sm-6 dropdown right">
+								<span class="dropdown-toggle glyphicon glyphicon-option-horizontal" id="passvault-dropdown" data-toggle="dropdown"></span>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="passvault-dropdown">
+									<li role="presentation">
+										<div class="passvault-dropdown-li">
+											<span class="glyphicon glyphicon-star-empty"></span>Add to favourites
+										</div>
+										<div class="passvault-dropdown-li">
+											<span class="glyphicon glyphicon-share"></span> Share
+										</div>
+										<div class="passvault-dropdown-li">
+											<span class="glyphicon glyphicon-trash"></span> Delete
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="passvault-name">Name</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="passvault-name" ng-model="passvault_fields['name']" autocomplete="off">
+								<input type="hidden" ng-model="passvault_fields['id']">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="passvault-password">Password</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="passvault-password" ng-model="passvault_fields['password']"autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="passvault-category">Category</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="passvault-category" ng-model="passvault_category" autocomplete="off">
+							</div>
+						</div>
+						<div ng-repeat="(key, data_field) in passvault_fields['custom_fields']">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="passvault-{{ key }}">{{ key }}</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="passvault-{{ key }}" ng-model="passvault_fields['custom_fields'][key]" autocomplete="off">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="passvault-description">Description</label>
+							<div class="col-sm-4">
+								<textarea class="form-control" rows="4" id="passvault-description" ng-model="passvault_fields['description']"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-6">
+								<div class="submit-btn btn btn-sm" data-toggle="modal" data-target="#addRow"><span class="glyphicon glyphicon-plus"></span> Add field</div>
+									<!-- Modal -->
+									<div class="modal fade" id="addRow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog add-row">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title" id="myModalLabel">Add Custom field</h4>
+										  </div>
+										  <div class="modal-body">
+										  	<div class="form-group">
+										  		<div class="col-sm-10">
+										  			<input type="text" class="form-control" placeholder="Field name(Eg: Url, SSH)" autocomplete="off" ng-model="custom_field_name">
+										  		</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-10">
+										  			<input type="text" class="form-control" placeholder="Field value(Eg: https://pinote.io)" autocomplete="off" ng-model="custom_field_value">
+										  			<input type="hidden" ng-model="passvault_fields['custom_fields']">
+										  		</div>
+											</div>
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="submit-btn btn btn-sm" ng-click="add_field(custom_field_name, custom_field_value, passvault_fields['custom_fields'])">Add custom field</button>
+										  </div>
+										</div>
+									  </div>
+									</div> 	<!-- Modal ended -->
+								<button type="submit" class="submit-btn right btn btn-sm" ng-click="update_passvault(passvault_fields, passvault_category)">Update</button>
+							</div>
+						</div>
+					</form>
+				</div>  <!-- Passvault fields ended -->
+			</div>
+		</div>
+
+		<script src="/static/js/pinoteController.js"></script>
+	</body>
+</html>
